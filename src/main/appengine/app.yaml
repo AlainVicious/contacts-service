@@ -21,6 +21,3 @@ automatic_scaling:
   cool_down_period_sec: 180
   cpu_utilization:
     target_utilization: 0.6
-    
-beta_settings:
-  cloud_sql_instances: findep-desarrollo-170215:us-central1:findep-mysql

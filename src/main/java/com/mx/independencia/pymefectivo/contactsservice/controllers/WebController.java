@@ -34,8 +34,8 @@ public class WebController {
 	@PostMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> contactForm(@RequestBody ContactRequest data) {
-		try {
-			if (data.isValid() && ReCaptchaService.isValid(data.getgRecaptcha())) {
+		// try {
+		// 	if (data.isValid() && ReCaptchaService.isValid(data.getgRecaptcha())) {
 				try {
 					String resp = contactService.doMagic(data);
 
@@ -48,15 +48,15 @@ public class WebController {
 					return new ResponseEntity<>("{\"status\":\"Errror\", \"mensaje\":\"" + e.getMessage() + "\"}",
 							HttpStatus.BAD_REQUEST);
 				}
-			}
-		} catch (
+		// 	}
+		// } catch (
 
-		IOException e) {
-			log.warn("Error al validar reCaptcha");
-			return new ResponseEntity<>("{\"status\":\"Server error\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<>("{\"status\":\"Error en el envío de parámetros, parámetros erroneos\"}",
-				HttpStatus.BAD_REQUEST);
+		// IOException e) {
+		// 	log.warn("Error al validar reCaptcha");
+		// 	return new ResponseEntity<>("{\"status\":\"Server error\"}", HttpStatus.INTERNAL_SERVER_ERROR);
+		// }
+		// return new ResponseEntity<>("{\"status\":\"Error en el envío de parámetros, parámetros erroneos\"}",
+		// 		HttpStatus.BAD_REQUEST);
 	}
 
 }
