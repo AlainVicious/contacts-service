@@ -3,6 +3,7 @@ package com.mx.independencia.pymefectivo.contactsservice.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-// import com.mysql.cj.jdbc.MysqlDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -28,13 +28,13 @@ public class ContactRepositoryImplementation implements ContactRepository {
 	private DBParameters db;
 	
 	private void configureDataSource() {
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(String.format("jdbc:mysql:///%s", db.getName()));
-		config.setUsername(db.getUser());
-		config.setPassword(db.getPass()); 
-		config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.mysql.SocketFactory");
-		config.addDataSourceProperty("cloudSqlInstance", db.getInstancia());
-		config.addDataSourceProperty("useSSL", "false");
+		Properties props = new Properties();
+		props.setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource");
+		props.setProperty("dataSource.user", db.getUser());
+		props.setProperty("dataSource.password", db.getPass());
+		props.setProperty("dataSource.databaseName", db.getName());
+		
+		HikariConfig config = new HikariConfig(props);
 		ds = new HikariDataSource(config);
 	}
 	
@@ -47,11 +47,12 @@ public class ContactRepositoryImplementation implements ContactRepository {
 		configureDataSource();
 		try (Connection con = ds.getConnection()) {
 			try (PreparedStatement statement = con
-					.prepareStatement("INSERT INTO contact (name, email, topic, message) VALUES (?, ?, ?, ?)")) {
+					.prepareStatement("INSERT INTO contact_fase_0 (name, email, phone, topic, message) VALUES (?, ?, ?, ?, ?)")) {
 				statement.setString(1, element.getName());
 				statement.setString(2, element.getEmail());
-				statement.setString(3, element.getTopic());
-				statement.setString(4, element.getMessage());
+				statement.setString(3, element.getPhone());
+				statement.setString(4, element.getTopic());
+				statement.setString(5, element.getMessage());
 				int resp = statement.executeUpdate();
 				if (resp != 0 ) {
 					response = "ok";

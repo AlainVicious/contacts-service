@@ -10,6 +10,7 @@ public class Contact implements Serializable {
 	private String email;
 	private String topic;
 	private String message;
+	private String phone;
 	
 	protected Contact() {
 		super();
@@ -68,5 +69,13 @@ public class Contact implements Serializable {
 	public String toString() {
 		return "ContactModel [id=" + id + ", name=" + name + ", email=" + email + ", topic=" + topic + ", message="
 				+ message + "]";
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }
