@@ -99,7 +99,7 @@
 				<version>2.2.0</version>
 				<configuration>
 					<version>1</version>
-					<deploy.projectId>findep-desarrollo-170215</deploy.projectId>
+					<deploy.projectId>fintech-calidad-mx</deploy.projectId>
 					<deploy.version>1.0</deploy.version>
 				</configuration>
 			</plugin>
